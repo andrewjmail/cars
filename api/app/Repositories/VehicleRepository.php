@@ -4,10 +4,15 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\VehicleRepositoryInterface;
 use App\Vehicle;
-use App\Http\Resources\VehicleResource;
 
 class VehicleRepository implements VehicleRepositoryInterface
 {
+
+    public function all()
+    {
+        return Vehicle::get();
+    }
+
     public function search($request)
     {
         $query = Vehicle::query();
@@ -30,6 +35,6 @@ class VehicleRepository implements VehicleRepositoryInterface
             });
         }
 
-        return  VehicleResource::collection($query->paginate(5));
+        return  $query->get();
     }
 }

@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MakesController;
-use App\Http\Controllers\VehiclesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +14,14 @@ use App\Http\Controllers\VehiclesController;
 |
 */
 
-Route::group(['prefix' => '/v1', 'middleware' => 'auth:api'], function() {
+Route::group(['prefix' => '/v1'], function() {
+    Route::get('/makes', 'MakesController@index');
+
+    Route::apiResource('/vehicles', VehicleController::class);
+
     Route::get('/makes', 'MakesController@index');
 
     Route::get('/makes/{make}/models', 'MakesController@models');
 
-    Route::get('/search', 'VehiclesController@search');
+    Route::get('/search', 'VehicleController@search');
 });
