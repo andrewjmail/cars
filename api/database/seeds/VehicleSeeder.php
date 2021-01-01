@@ -29,52 +29,52 @@ class VehicleSeeder extends Seeder
         $electric = FuelType::where('type', 'Electric')->first();
 
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $eTron->id,
             'fuel_type_id' => $electric->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $a4->id,
             'fuel_type_id' => $petrol->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $tt->id,
             'fuel_type_id' => $petrol->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $a4->id,
             'fuel_type_id' => $diesel->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $golf->id,
             'fuel_type_id' => $diesel->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $golf->id,
             'fuel_type_id' => $electric->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $polo->id,
             'fuel_type_id' => $petrol->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $polo->id,
             'fuel_type_id' => $diesel->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $x3->id,
             'fuel_type_id' => $diesel->id
         ]);
 
-        Vehicle::create([
+        factory(App\Vehicle::class)->create([
             'model_id' => $i3->id,
             'fuel_type_id' => $electric->id
         ]);
