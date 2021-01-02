@@ -17,27 +17,27 @@
       </div>
     </div>
 
+    <VehicleTable></VehicleTable>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 
-import axios from 'axios';
+import { mapActions } from 'vuex'
 
 import SelectInput from './SelectInput.vue'
 import Errors from './Errors.vue'
+import VehicleTable from "./VehicleTable";
 
 export default {
   name: 'VehicleSearch',
   components: {
     SelectInput,
-    Errors
+    Errors,
+    VehicleTable
   },
   data() {
     return {
-      makes: [],
-      models: [],
       make: null,
       model: null,
       fuelType: null,
@@ -45,35 +45,31 @@ export default {
     }
   },
   computed: {
-    vehicles() {
-      return this.$store.state.vehicles;
+
+    models() {
+      return this.$store.state.models;
+    },
+    makes() {
+      return this.$store.state.makes;
     },
     error() {
       return this.$store.state.error;
     }
   },
   created() {
-    axios.get(`http://car-api.test/api/v1/makes`, {
-      headers: {
-        Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
-      }
-    })
-    .then(response => {
-      this.makes = response.data.data;
-    })
-    .catch(e => {
-        this.setError(e);
-    })
+    this.getMakes();
   },
   methods: {
     ...mapActions([
-      'setVehicles',
-      'setError'
+      'getMakes',
+      'getModels',
+      'getVehicles'
     ]),
     handleSelect(type, selected) {
-        switch(type) {
+      switch(type) {
         case 'make':
           this.make = selected;
+          this.model = null;
           break;
         case 'model':
           this.model = selected;
@@ -82,11 +78,17 @@ export default {
           this.fuelType = selected;
           break;
         default:
+          break;
       }
+      this.search()
     },
     search() {
-      const make = this.makes.find(make => make.id === this.make).name;
-      let query = `make=${make}`;
+      let query = '';
+
+      if (this.make) {
+        const make = this.makes.find(make => make.id === this.make).name;
+        query = `make=${make}`;
+      }
 
       if (this.model) {
         const model = this.models.find(model => model.id === this.model).name;
@@ -96,44 +98,17 @@ export default {
       if (this.fuelType) {
         query += `&fuelType=${this.fuelType}`;
       }
-      axios.get(`http://car-api.test/api/v1/search?${query}`, {
-        headers: {
-          Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui',
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
-      .then(response => {
-        this.setVehicles(response.data.data);
-        this.$router.push({
-          path: `search?${query}`
-        })
-      })
-      .catch(e => {
-        this.setError(e);
-      })    
+      this.getVehicles(query);
+      //this.$router.push({path: `search?${query}`});
     },
   },
   watch: {
     make() {
-      // Incase value has been reset
+      // In case value has been reset
       if (this.make === null) {
         return;
       }
-
-      axios.get(`http://car-api.test/api/v1/makes/${this.make}/models`, {
-        headers: {
-          Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
-        }
-      })
-      .then(response => {
-        this.models = response.data.data;
-        this.model = null;
-        
-      })
-      .catch(e => {
-        this.setError(e);
-      })      
+      this.getModels(this.make);
     },
   },
 }

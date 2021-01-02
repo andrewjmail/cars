@@ -1,8 +1,7 @@
 <template>
 <div>
-  <div v-if="loading">Loading ...</div>
-  <div v-else class="py-5">
-    <table class="table-auto" v-if="vehicles.length">
+  <div v-if="vehicles.length > 0" class="py-5">
+    <table class="table-auto">
       <thead>
         <tr>
           <th class="px-4 py-2">Make</th>
@@ -20,22 +19,20 @@
         </tr>
       </tbody>
     </table>
-    <div v-else>No results</div>
-    <button v-on:click="back" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Back</button>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Reset</button>
   </div>
-  
+  <div v-else>No results</div>
+
 </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import axios from 'axios';
 
 export default {
-  name: 'Table',
+  name: 'VehicleTable',
   data() {
     return {
-      loading: false
     }
   },
   computed: {
@@ -47,30 +44,12 @@ export default {
     }
   },
   created() {
-    this.loading = true;
-    axios.get(`http://car-api.test/api/v1${this.$route.fullPath}`, {
-      headers: {
-        Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
-      }
-    })
-    .then(response => {
-      this.loading = false;
-      this.setVehicles(response.data);
-    })
-    .catch(e => {
-        this.setError(e);
-    })
+    this.getVehicles();
   },
   methods: {
     ...mapActions([
-      'setVehicles',
-      'setError'
+      'getVehicles'
     ]),
-    back() {
-      this.$router.push({
-        path: `/`
-      })
-    }
   }
 }
 </script>

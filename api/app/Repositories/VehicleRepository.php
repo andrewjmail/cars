@@ -2,18 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\VehicleSearchRequest;
 use App\Repositories\Interfaces\VehicleRepositoryInterface;
 use App\Vehicle;
 
 class VehicleRepository implements VehicleRepositoryInterface
 {
 
-    public function all()
-    {
-        return Vehicle::get();
-    }
-
-    public function search($request)
+    public function all(VehicleSearchRequest $request)
     {
         $query = Vehicle::query();
 

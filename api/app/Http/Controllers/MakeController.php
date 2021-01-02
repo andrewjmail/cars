@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MakeResource;
 use App\Repositories\Interfaces\MakeRepositoryInterface;
 use App\Make;
 
-class MakesController extends Controller
+class MakeController extends Controller
 {
     private $makeRepository;
 
@@ -16,7 +17,7 @@ class MakesController extends Controller
 
     public function index()
     {
-        return $this->makeRepository->all();
+        return MakeResource::collection($this->makeRepository->all());
     }
 
     public function models(Make $make)

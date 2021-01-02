@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VehicleSearch from './components/VehicleSearch'
-import Table from './components/Table'
 import store from './store'
 import Router from 'vue-router'
 import "./main.css";
@@ -18,11 +17,6 @@ const router =  new Router({
       path: '/',
       name: 'Home',
       component: VehicleSearch
-    },
-    {
-      path: '/search',
-      name: 'Search',
-      component: Table
     }
   ]
 })

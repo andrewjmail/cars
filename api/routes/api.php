@@ -15,13 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => '/v1'], function() {
-    Route::get('/makes', 'MakesController@index');
+    Route::get('/makes', 'MakeController@index');
 
     Route::apiResource('/vehicles', VehicleController::class);
 
-    Route::get('/makes', 'MakesController@index');
+    Route::get('/makes', 'MakeController@index');
 
-    Route::get('/makes/{make}/models', 'MakesController@models');
-
-    Route::get('/search', 'VehicleController@search');
+    Route::get('/makes/{make}/models', 'MakeController@models');
 });

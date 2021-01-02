@@ -24,9 +24,9 @@ class VehicleSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'make' => 'required|exists:App\Make,name',
-            'model' => 'string',
-            'fuelType' => 'string'
+            'make' => 'exists:App\Make,name',
+            'model' => 'exists:App\Model,name',
+            'fuelType' => 'exists:App\FuelType,type'
         ];
     }
 }

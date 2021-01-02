@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VehicleSearchRequest;
 use App\Repositories\Interfaces\VehicleRepositoryInterface;
-use App\Vehicle;
 use App\Http\Resources\VehicleResource;
+use Illuminate\Http\JsonResponse;
 
 class VehicleController extends Controller
 {
@@ -17,13 +17,9 @@ class VehicleController extends Controller
         $this->vehicleRepository = $vehicleRepository;
     }
 
-    public function index() {  
-        $vehicles = $this->vehicleRepository->all();
-        return response()->json(VehicleResource::collection($vehicles));
-    }
-
-    public function search(VehicleSearchRequest $request) {
-        $vehicles = $this->vehicleRepository->search($request);
+    public function index(VehicleSearchRequest $request): JsonResponse
+    {
+        $vehicles = $this->vehicleRepository->all($request);
         return response()->json(VehicleResource::collection($vehicles));
     }
 }
