@@ -9,7 +9,7 @@ export default new Vuex.Store({
       error: null
     },
     mutations: {
-        getVehicles (state, vehicles) {
+      setVehicles (state, vehicles) {
         state.vehicles = vehicles;
       },
       setError(state, error)  {
@@ -17,8 +17,8 @@ export default new Vuex.Store({
       }
     },
     actions: {
-      getVehicles (context, vehicles) {
-        context.commit('getVehicles', vehicles)
+      setVehicles (context, vehicles) {
+        context.commit('setVehicles', vehicles)
       },
       setError (context, error) {
         context.commit('setError', error.toString());
@@ -26,5 +26,5 @@ export default new Vuex.Store({
           context.commit('setError', null)
         }, 5000);
       }
-    }
+    },
   })

@@ -23,7 +23,7 @@ class VehicleController extends Controller
     }
 
     public function search(VehicleSearchRequest $request) {
-        $vehciles = $this->vehicleRepository->search($request);
+        $vehicles = $this->vehicleRepository->search($request);
         return response()->json(VehicleResource::collection($vehicles));
     }
 }

@@ -53,7 +53,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://localhost:8000/api/v1/makes`, {
+    axios.get(`http://car-api.test/api/v1/makes`, {
       headers: {
         Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
       }
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getVehicles',
+      'setVehicles',
       'setError'
     ]),
     handleSelect(type, selected) {
@@ -96,13 +96,15 @@ export default {
       if (this.fuelType) {
         query += `&fuelType=${this.fuelType}`;
       }
-      axios.get(`http://localhost:8000/api/v1/search?${query}`, {
+      axios.get(`http://car-api.test/api/v1/search?${query}`, {
         headers: {
-          Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
+          Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         }
       })
       .then(response => {
-        this.getVehicles(response.data.data);
+        this.setVehicles(response.data.data);
         this.$router.push({
           path: `search?${query}`
         })
@@ -119,7 +121,7 @@ export default {
         return;
       }
 
-      axios.get(`http://localhost:8000/api/v1/makes/${this.make}/models`, {
+      axios.get(`http://car-api.test/api/v1/makes/${this.make}/models`, {
         headers: {
           Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
         }

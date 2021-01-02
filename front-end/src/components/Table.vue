@@ -35,7 +35,7 @@ export default {
   name: 'Table',
   data() {
     return {
-      loading: false,
+      loading: false
     }
   },
   computed: {
@@ -47,25 +47,23 @@ export default {
     }
   },
   created() {
-    if (!this.$store.vehicles) {
-      this.loading = true;
-      axios.get(`http://localhost:8000/api/v1${this.$route.fullPath}`, {
-        headers: {
-          Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
-        }
-      })
-      .then(response => {
-        this.loading = false;
-        this.getVehicles(response.data.data);
-      })
-      .catch(e => {
-          this.setError(e);
-      })
-    }
+    this.loading = true;
+    axios.get(`http://car-api.test/api/v1${this.$route.fullPath}`, {
+      headers: {
+        Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui' 
+      }
+    })
+    .then(response => {
+      this.loading = false;
+      this.setVehicles(response.data);
+    })
+    .catch(e => {
+        this.setError(e);
+    })
   },
   methods: {
     ...mapActions([
-      'getVehicles',
+      'setVehicles',
       'setError'
     ]),
     back() {
