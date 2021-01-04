@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="container sm">
+    <Notification></Notification>
     <h1 class="text-5xl text-center">Vehicle Search</h1>
     <router-view></router-view>
   </div>
@@ -7,8 +8,13 @@
 
 <script>
 
+import Notification from "@/components/Notification";
+
 export default {
   name: 'App',
+  components: {
+    Notification
+  }
 }
 </script>
 

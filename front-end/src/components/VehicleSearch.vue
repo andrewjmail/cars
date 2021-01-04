@@ -1,5 +1,5 @@
 <template>
-  <div class="container sm">
+  <div>
     <Errors v-if="error != null" :error="error"/>
 
     <div class="py-5">

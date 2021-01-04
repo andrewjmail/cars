@@ -19,7 +19,7 @@ Route::group(['prefix' => '/v1'], function() {
 
     Route::apiResource('/vehicles', VehicleController::class);
 
-    Route::get('/makes', 'MakeController@index');
+    Route::apiResource('/makes', MakeController::class)->only(['index', 'store', 'update', 'destroy']);
 
     Route::get('/makes/{make}/models', 'MakeController@models');
 });

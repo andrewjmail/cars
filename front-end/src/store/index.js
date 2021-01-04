@@ -12,7 +12,8 @@ export default new Vuex.Store({
       vehicles: [],
       error: null,
       makes: [],
-      models: []
+      models: [],
+      notification: null
     },
     mutations: {
       SET_VEHICLES(state, vehicles) {
@@ -27,6 +28,21 @@ export default new Vuex.Store({
       },
       SET_MODELS(state, models) {
         state.models = models;
+      },
+      CREATE_MAKE(state, make) {
+        state.makes.push(make);
+      },
+      UPDATE_MAKE(state, make) {
+        state.makes = state.makes.map(stateMake => {
+          return stateMake.id === make.id ? make : stateMake;
+        });
+      },
+      DELETE_MAKE(state, make) {
+          state.makes = state.makes.filter(stateMake => stateMake.id !== make.id);
+      },
+      SET_NOTIFICATION(state, notification) {
+          state.notification = notification;
+          setTimeout(() => state.notification = null, 2500);
       }
     },
     actions: {
@@ -40,7 +56,8 @@ export default new Vuex.Store({
       },
       getMakes(context) {
         makeService.get().then(response => {
-            context.commit('SET_MAKES', response.data.data);
+            console.log(response);
+            context.commit('SET_MAKES', response.data);
         }).catch(error => {
             context.commit('SET_ERROR', error.toString());
         });
@@ -52,5 +69,29 @@ export default new Vuex.Store({
             context.commit('SET_ERROR', error.toString());
         });
       },
+      createMake(context, make) {
+        makeService.create(make).then(response => {
+          context.commit('CREATE_MAKE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      updateMake(context, make) {
+          return makeService.update(make).then(response => {
+              context.commit('UPDATE_MAKE', response.data);
+          }).catch(error => {
+              context.commit('SET_ERROR', error.toString());
+          });
+      },
+      deleteMake(context, make) {
+        return makeService.delete(make).then(response => {
+          context.commit('DELETE_MAKE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      setNotification(context, notification) {
+          context.commit('SET_NOTIFICATION', notification);
+      }
     },
   })
