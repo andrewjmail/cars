@@ -1,8 +1,10 @@
 <template>
   <div>
-y
     <div>
-      <h5>Makes</h5>
+      <div class="flex justify-between align-middle">
+        <h5>Makes</h5>
+        <button @click="createMake" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-2 mr-2">Create</button>
+      </div>
       <table class="table-auto">
         <thead>
           <tr>
@@ -20,12 +22,6 @@ y
         </tr>
         </tbody>
       </table>
-      <h5>Create Make</h5>
-      <div>
-        <label>Name</label>
-        <input v-model="make" type="text" placeholder="Make Name">
-        <button @click="submitMake">Create Make</button>
-      </div>
     </div>
   <EditModal
       v-if="makeToEdit"
@@ -36,6 +32,9 @@ y
       v-if="makeToDelete"
       :make="makeToDelete"
       :close-delete-modal="closeDeleteModal"></DeleteModal>
+    <CreateModal
+        v-if="showCreateModal"
+        :close-create-modal="closeCreateModal"></CreateModal>
   </div>
 </template>
 
@@ -45,18 +44,21 @@ import {mapActions} from "vuex";
 
 import EditModal from "@/components/EditModal";
 import DeleteModal from "@/components/DeleteModal";
+import CreateModal from "@/components/CreateModal";
 
 export default {
   name: "Admin",
   components: {
     EditModal,
-    DeleteModal
+    DeleteModal,
+    CreateModal
   },
   data() {
     return {
       make: null,
       makeToEdit: null,
-      makeToDelete: null
+      makeToDelete: null,
+      showCreateModal: false
     }
   },
   computed: {
@@ -66,8 +68,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getMakes',
-      'createMake'
+      'getMakes'
     ]),
     submitMake() {
       if (this.make) {
@@ -85,7 +86,14 @@ export default {
     },
     closeEditModal() {
       this.makeToEdit = null;
+    },
+    closeCreateModal() {
+      this.showCreateModal = false;
+    },
+    createMake() {
+      this.showCreateModal = true;
     }
+
   },
   created() {
     this.getMakes();
