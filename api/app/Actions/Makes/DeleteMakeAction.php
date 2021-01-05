@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\Actions;
-
+namespace App\Actions\Makes;
 
 use App\Make;
 

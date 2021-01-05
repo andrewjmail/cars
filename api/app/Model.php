@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Model extends EloquentModel
 {
     public $timestamps = false;
+    protected $fillable = ['name'];
 
     public function make(): BelongsTo
     {

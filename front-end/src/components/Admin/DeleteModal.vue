@@ -73,7 +73,7 @@ export default {
     submitDelete() {
       this.deleteMake(this.make).then(() => {
         this.setNotification({
-          message: 'Make deleted.',
+          message: 'Makes deleted.',
           class: 'bg-green-600'
         });
       }).catch(() => {

@@ -26,9 +26,6 @@ export default new Vuex.Store({
       SET_MAKES(state, makes) {
         state.makes = makes;
       },
-      SET_MODELS(state, models) {
-        state.models = models;
-      },
       CREATE_MAKE(state, make) {
         state.makes.push(make);
       },
@@ -39,6 +36,20 @@ export default new Vuex.Store({
       },
       DELETE_MAKE(state, make) {
           state.makes = state.makes.filter(stateMake => stateMake.id !== make.id);
+      },
+      SET_MODELS(state, models) {
+        state.models = models;
+      },
+      CREATE_MODEL(state, model) {
+        state.models.push(model);
+      },
+      UPDATE_MODEL(state, model) {
+        state.models = state.models.map(stateModel => {
+          return stateModel.id === model.id ? model : stateModel;
+        });
+      },
+      DELETE_MODEL(state, model) {
+        state.models = state.models.filter(stateModel => stateModel.id !== model.id);
       },
       SET_NOTIFICATION(state, notification) {
           state.notification = notification;
@@ -62,13 +73,6 @@ export default new Vuex.Store({
             context.commit('SET_ERROR', error.toString());
         });
       },
-      getModels(context, make) {
-        modelService.get(make).then(response => {
-            context.commit('SET_MODELS', response.data.data);
-        }).catch(error => {
-            context.commit('SET_ERROR', error.toString());
-        });
-      },
       createMake(context, make) {
         makeService.create(make).then(response => {
           context.commit('CREATE_MAKE', response.data);
@@ -77,15 +81,43 @@ export default new Vuex.Store({
         });
       },
       updateMake(context, make) {
-          return makeService.update(make).then(response => {
-              context.commit('UPDATE_MAKE', response.data);
-          }).catch(error => {
-              context.commit('SET_ERROR', error.toString());
-          });
+        return makeService.update(make).then(response => {
+          context.commit('UPDATE_MAKE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
       },
       deleteMake(context, make) {
         return makeService.delete(make).then(response => {
           context.commit('DELETE_MAKE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      getModels(context) {
+        modelService.get().then(response => {
+          context.commit('SET_MODELS', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      createModel(context, data) {
+        modelService.create(data).then(response => {
+          context.commit('CREATE_MODEL', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      updateModel(context, data) {
+        return modelService.update(data).then(response => {
+          context.commit('UPDATE_MAKE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      deleteModel(context, model) {
+        return modelService.delete(model).then(response => {
+          context.commit('DELETE_MODEL', response.data);
         }).catch(error => {
           context.commit('SET_ERROR', error.toString());
         });

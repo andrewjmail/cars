@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\DeleteMakeAction;
-use App\Actions\StoreMakeAction;
-use App\Actions\UpdateMakeAction;
+use App\Actions\Makes\DeleteMakeAction;
+use App\Actions\Makes\StoreMakeAction;
+use App\Actions\Makes\UpdateMakeAction;
 use App\Http\Resources\MakeResource;
 use App\Repositories\Interfaces\MakeRepositoryInterface;
 use App\Make;

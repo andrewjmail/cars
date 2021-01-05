@@ -23,18 +23,23 @@
         </tbody>
       </table>
     </div>
-  <EditModal
-      v-if="makeToEdit"
-      :make="makeToEdit"
-      :close-edit-modal="closeEditModal">
-  </EditModal>
-  <DeleteModal
-      v-if="makeToDelete"
-      :make="makeToDelete"
-      :close-delete-modal="closeDeleteModal"></DeleteModal>
-    <CreateModal
-        v-if="showCreateModal"
-        :close-create-modal="closeCreateModal"></CreateModal>
+    <model-admin :models="models"></model-admin>
+
+    <edit-modal
+        v-if="makeToEdit"
+        :make="makeToEdit"
+        :close-edit-modal="closeEditModal">
+    </edit-modal>
+    <delete-modal
+        v-if="makeToDelete"
+        :make="makeToDelete"
+        :close-delete-modal="closeDeleteModal">
+
+    </delete-modal>
+    <create-modal
+          v-if="showCreateModal"
+          :close-create-modal="closeCreateModal">
+    </create-modal>
   </div>
 </template>
 
@@ -42,16 +47,18 @@
 
 import {mapActions} from "vuex";
 
-import EditModal from "@/components/EditModal";
-import DeleteModal from "@/components/DeleteModal";
-import CreateModal from "@/components/CreateModal";
+import EditModal from "@/components/Admin/EditModal";
+import DeleteModal from "@/components/Admin/DeleteModal";
+import CreateModal from "@/components/Admin/CreateModal";
+import ModelAdmin from "@/components/Admin/ModelAdmin/Index";
 
 export default {
   name: "Admin",
   components: {
     EditModal,
     DeleteModal,
-    CreateModal
+    CreateModal,
+    ModelAdmin
   },
   data() {
     return {
@@ -64,17 +71,16 @@ export default {
   computed: {
     makes() {
       return this.$store.state.makes;
+    },
+    models() {
+      return this.$store.state.models;
     }
   },
   methods: {
     ...mapActions([
-      'getMakes'
+      'getMakes',
+      'getModels'
     ]),
-    submitMake() {
-      if (this.make) {
-        this.createMake(this.make);
-      }
-    },
     editMake(id) {
       this.makeToEdit = { ...this.makes.find(make => make.id === id)};
     },
@@ -97,6 +103,7 @@ export default {
   },
   created() {
     this.getMakes();
+    this.getModels();
   }
 
 }

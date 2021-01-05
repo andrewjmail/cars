@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\ModelRepositoryInterface;
+use App\Repositories\ModelRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\MakeRepository;
 use App\Repositories\Interfaces\MakeRepositoryInterface;
@@ -14,12 +16,17 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            MakeRepositoryInterface::class, 
+            MakeRepositoryInterface::class,
             MakeRepository::class
         );
 
         $this->app->bind(
-            VehicleRepositoryInterface::class, 
+            ModelRepositoryInterface::class,
+            ModelRepository::class
+        );
+
+        $this->app->bind(
+            VehicleRepositoryInterface::class,
             VehicleRepository::class
         );
     }

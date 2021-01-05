@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => '/v1'], function() {
-    Route::get('/makes', 'MakeController@index');
-
     Route::apiResource('/vehicles', VehicleController::class);
-
     Route::apiResource('/makes', MakeController::class)->only(['index', 'store', 'update', 'destroy']);
-
-    Route::get('/makes/{make}/models', 'MakeController@models');
+    Route::apiResource('/models', ModelController::class)->only(['index', 'store', 'update', 'destroy']);
 });

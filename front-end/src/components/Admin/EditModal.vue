@@ -77,7 +77,7 @@ export default {
     async editMake() {
       await this.updateMake(this.make).then(() => {
         this.setNotification({
-          message: 'Make Updated.',
+          message: 'Makes Updated.',
           class: 'bg-green-600'
         });
       }).catch(() => {

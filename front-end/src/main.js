@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VehicleSearch from './components/VehicleSearch'
-import Admin from "./components/Admin";
+import Admin from "./components/Admin/Index";
 import store from './store'
 import Router from 'vue-router'
 import "./main.css";
