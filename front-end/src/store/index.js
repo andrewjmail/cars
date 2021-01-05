@@ -67,17 +67,23 @@ export default new Vuex.Store({
       },
       getMakes(context) {
         makeService.get().then(response => {
-            console.log(response);
             context.commit('SET_MAKES', response.data);
         }).catch(error => {
             context.commit('SET_ERROR', error.toString());
         });
       },
       createMake(context, make) {
-        makeService.create(make).then(response => {
+        return makeService.create(make).then(response => {
           context.commit('CREATE_MAKE', response.data);
+          context.commit('SET_NOTIFICATION', {
+            message: 'Make Created',
+            class: 'class: bg-green-600'
+          })
         }).catch(error => {
-          context.commit('SET_ERROR', error.toString());
+          context.commit('SET_NOTIFICATION', {
+            message: error.response.data.errors.name.join(', '),
+            class: 'class: bg-red-600'
+          })
         });
       },
       updateMake(context, make) {

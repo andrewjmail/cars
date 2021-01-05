@@ -57,16 +57,6 @@ export default {
     ]),
     submit() {
       this.createMake(this.name).then(() => {
-        this.setNotification({
-          message: 'Makes Created.',
-          class: 'bg-green-600'
-        });
-      }).catch(() => {
-        this.setNotification({
-          message: 'There was a problem creating this make.',
-          class: 'bg-red-600'
-        });
-      }).finally(()=> {
         this.closeCreateModal();
       });
     }

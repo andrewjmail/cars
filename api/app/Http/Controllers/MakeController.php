@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\Makes\DeleteMakeAction;
 use App\Actions\Makes\StoreMakeAction;
 use App\Actions\Makes\UpdateMakeAction;
+use App\Http\Requests\CreateMakeRequest;
+use App\Http\Requests\UpdateMakeRequest;
 use App\Http\Resources\MakeResource;
 use App\Repositories\Interfaces\MakeRepositoryInterface;
 use App\Make;
@@ -36,13 +38,13 @@ class MakeController extends Controller
         return response()->json(MakeResource::collection($this->makeRepository->all()));
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(CreateMakeRequest $request): JsonResponse
     {
         $make = $this->storeMakeAction->execute($request);
         return response()->json(MakeResource::make($make));
     }
 
-    public function update(Make $make, Request $request): JsonResponse
+    public function update(Make $make, UpdateMakeRequest $request): JsonResponse
     {
         $make = $this->updateMakeAction->execute($make, $request);
         return response()->json(MakeResource::make($make));

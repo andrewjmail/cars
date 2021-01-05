@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\Models\DeleteModelAction;
 use App\Actions\Models\StoreModelAction;
 use App\Actions\Models\UpdateModelAction;
+use App\Http\Requests\CreateModelRequest;
+use App\Http\Requests\UpdateModelRequest;
 use App\Http\Resources\ModelResource;
 use App\Make;
 use App\Model;
@@ -38,13 +40,13 @@ class ModelController extends Controller
         return response()->json(ModelResource::collection($this->modelRepository->all()));
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(CreateModelRequest $request): JsonResponse
     {
         $model = $this->storeModelAction->execute($request);
         return response()->json(ModelResource::make($model));
     }
 
-    public function update(Model $model, Request $request): JsonResponse
+    public function update(Model $model, UpdateModelRequest $request): JsonResponse
     {
         $model = $this->updateModelAction->execute($model, $request);
         return response()->json(ModelResource::make($model));
