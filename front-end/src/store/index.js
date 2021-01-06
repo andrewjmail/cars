@@ -54,6 +54,14 @@ export default new Vuex.Store({
       CREATE_VEHICLE(state, vehicle) {
         state.vehicles.push(vehicle);
       },
+      UPDATE_VEHICLE(state, vehicle) {
+        state.vehicles = state.vehicles.map(stateVehicle => {
+          return stateVehicle.id === vehicle.id ? vehicle : stateVehicle;
+        });
+      },
+      DELETE_VEHICLE(state, vehicle) {
+        state.vehicles = state.vehicles.filter(stateVehicle => stateVehicle.id !== vehicle.id);
+      },
       SET_NOTIFICATION(state, notification) {
           state.notification = notification;
           setTimeout(() => state.notification = null, 2500);
@@ -134,6 +142,20 @@ export default new Vuex.Store({
       createVehicle(context, data) {
         vehicleService.create(data).then(response => {
           context.commit('CREATE_VEHICLE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      updateVehicle(context, data) {
+        return vehicleService.update(data).then(response => {
+          context.commit('UPDATE_VEHICLE', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      deleteVehicle(context, vehiclw) {
+        return vehicleService.delete(vehiclw).then(response => {
+          context.commit('DELETE_VEHICLE', response.data);
         }).catch(error => {
           context.commit('SET_ERROR', error.toString());
         });

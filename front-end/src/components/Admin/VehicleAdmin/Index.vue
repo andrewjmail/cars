@@ -38,15 +38,17 @@
                   :models="models"
                   :close-create-modal="closeCreateModal">
     </create-vehicle-modal>
-<!--    <edit-modal v-if="editModel"-->
-<!--                :close-edit-modal="closeEditModal"-->
-<!--                :model="editModel">-->
-<!--    </edit-modal>-->
-<!--    <delete-modal v-if="deleteModel"-->
-<!--                  :close-delete-modal="closeDeleteModal"-->
-<!--                  :model="deleteModel"-->
-<!--                >-->
-<!--    </delete-modal>-->
+    <edit-vehicle-modal v-if="editVehicle"
+                :close-edit-modal="closeEditModal"
+                :vehicle="editVehicle"
+                :makes="makes"
+                :models="models">
+    </edit-vehicle-modal>
+    <delete-vehicle-modal v-if="deleteVehicle"
+                  :close-delete-modal="closeDeleteModal"
+                  :vehicle="deleteVehicle"
+                >
+    </delete-vehicle-modal>
   </div>
 </template>
 
@@ -54,11 +56,15 @@
 import {mapActions} from "vuex";
 
 import CreateVehicleModal from "@/components/Admin/VehicleAdmin/CreateVehicleModal";
+import EditVehicleModal from "@/components/Admin/VehicleAdmin/EditVehicleModal";
+import DeleteVehicleModal from "@/components/Admin/VehicleAdmin/DeleteVehicleModal";
 
 export default {
   name: "VehicleAdmin",
   components:{
-    CreateVehicleModal
+    EditVehicleModal,
+    CreateVehicleModal,
+    DeleteVehicleModal
   },
   props: {
     vehicles: {
@@ -77,8 +83,8 @@ export default {
   data() {
     return {
       showCreateModal: false,
-      editModel: null,
-      deleteModel: null
+      editVehicle: null,
+      deleteVehicle: null
     }
   },
   methods: {
@@ -91,11 +97,17 @@ export default {
     closeCreateModal() {
       this.showCreateModal = false;
     },
+    closeEditModal() {
+      this.editVehicle = null;
+    },
     editVehicleModal(id) {
-      console.log(this.vehicles.find(vehicle => vehicle.id === id));
+      this.editVehicle = {...this.vehicles.find(vehicle => vehicle.id === id)};
     },
     deleteVehicleModal(id) {
-      console.log(this.vehicles.find(vehicle => vehicle.id === id));
+      this.deleteVehicle = {...this.vehicles.find(vehicle => vehicle.id === id)};
+    },
+    closeDeleteModal() {
+      this.deleteVehicle = null;
     }
   },
 }

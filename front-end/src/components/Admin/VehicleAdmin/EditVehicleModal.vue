@@ -79,9 +79,9 @@
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button @click="submit" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-            Create
+            Update
           </button>
-          <button @click="closeCreateModal" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+          <button @click="closeEditModal" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
             Cancel
           </button>
         </div>
@@ -94,11 +94,15 @@
 import {mapActions} from "vuex";
 
 export default {
-  name: "CreateVehicleModal",
+  name: "EditVehicleModal",
   props: {
-    closeCreateModal: {
+    closeEditModal: {
       required: true,
       type: Function
+    },
+    vehicle: {
+      required: true,
+      type: Object
     },
     makes: {
       required: true,
@@ -111,8 +115,8 @@ export default {
   },
   data() {
     return {
-      colour: '',
-      price: '',
+      colour: null,
+      price: null,
       make: null,
       model: null,
       fuelType: null,
@@ -130,24 +134,37 @@ export default {
   computed: {
     years() {
       return ['2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010'];
+    },
+    initialModels() {
+      return this.models.filter(model => model.make.id === this.make)
     }
   },
   methods: {
     ...mapActions([
-      'createVehicle'
+      'updateVehicle'
     ]),
     submit() {
-      this.createVehicle({
+      this.updateVehicle({
         model: this.model,
         make: this.make,
         colour: this.colour,
         price: Number(this.price),
         year: this.year,
-        fuel_type: this.fuelType
+        fuel_type: this.fuelType,
+        id: this.vehicle.id
       }).then(() => {
         this.closeCreateModal();
       });
     }
+  },
+  created() {
+    this.colour = this.vehicle.colour,
+    this.price = this.vehicle.price,
+    this.make = this.vehicle.make.id,
+    this.model = this.vehicle.model.id,
+    this.fuelType = this.vehicle.make.id,
+    this.year = this.vehicle.year,
+    this.makesModels = this.initialModels
   }
 }
 </script>

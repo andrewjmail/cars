@@ -46,11 +46,11 @@ export default {
                 Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui'
             }
         })
-            .then(response => {
-                return response;
-            })
-            .catch(e => {
-                return e.message;
-            })
+        .then(response => {
+            return response;
+        })
+        .catch(e => {
+            return e.message;
+        })
     },
 }
