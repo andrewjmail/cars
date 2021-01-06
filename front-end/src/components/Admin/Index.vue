@@ -1,49 +1,11 @@
 <template>
   <div>
-    <div>
-      <div class="flex justify-between align-middle">
-        <h5>Makes</h5>
-        <button @click="createMake" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-2 mr-2">Create</button>
-      </div>
-      <table class="table-auto">
-        <thead>
-          <tr>
-            <td class="px-4 py-2">Name</td>
-            <td class="px-4 py-2">Actions</td>
-          </tr>
-        </thead>
-        <tbody>
-        <tr v-for="make in makes" :key="make.id">
-          <td class="border px-4 py-2">{{make.name}}</td>
-          <td class="border px-4 py-2">
-            <button @click="editMake(make.id)" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-2 mr-2">Edit</button>
-            <button @click="deleteMake(make.id)" class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded mt-2">Delete</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <make-admin :makes="makes"></make-admin>
     <model-admin :models="models"></model-admin>
     <vehicle-admin :vehicles="vehicles"
                    :makes="makes"
                    :models="models">
     </vehicle-admin>
-
-    <edit-modal
-        v-if="makeToEdit"
-        :make="makeToEdit"
-        :close-edit-modal="closeEditModal">
-    </edit-modal>
-    <delete-modal
-        v-if="makeToDelete"
-        :make="makeToDelete"
-        :close-delete-modal="closeDeleteModal">
-
-    </delete-modal>
-    <create-modal
-          v-if="showCreateModal"
-          :close-create-modal="closeCreateModal">
-    </create-modal>
   </div>
 </template>
 
@@ -51,20 +13,16 @@
 
 import {mapActions} from "vuex";
 
-import EditModal from "@/components/Admin/EditModal";
-import DeleteModal from "@/components/Admin/DeleteModal";
-import CreateModal from "@/components/Admin/CreateModal";
-import ModelAdmin from "@/components/Admin/ModelAdmin/Index";
+import MakeAdmin from './MakeAdmin/Index'
+import ModelAdmin from './ModelAdmin/Index';
 import VehicleAdmin from './VehicleAdmin/Index';
 
 export default {
   name: "Admin",
   components: {
-    EditModal,
-    DeleteModal,
-    CreateModal,
     ModelAdmin,
-    VehicleAdmin
+    VehicleAdmin,
+    MakeAdmin
   },
   data() {
     return {
