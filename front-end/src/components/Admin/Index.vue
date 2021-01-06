@@ -24,6 +24,10 @@
       </table>
     </div>
     <model-admin :models="models"></model-admin>
+    <vehicle-admin :vehicles="vehicles"
+                   :makes="makes"
+                   :models="models">
+    </vehicle-admin>
 
     <edit-modal
         v-if="makeToEdit"
@@ -51,6 +55,7 @@ import EditModal from "@/components/Admin/EditModal";
 import DeleteModal from "@/components/Admin/DeleteModal";
 import CreateModal from "@/components/Admin/CreateModal";
 import ModelAdmin from "@/components/Admin/ModelAdmin/Index";
+import VehicleAdmin from './VehicleAdmin/Index';
 
 export default {
   name: "Admin",
@@ -58,7 +63,8 @@ export default {
     EditModal,
     DeleteModal,
     CreateModal,
-    ModelAdmin
+    ModelAdmin,
+    VehicleAdmin
   },
   data() {
     return {
@@ -74,12 +80,16 @@ export default {
     },
     models() {
       return this.$store.state.models;
-    }
+    },
+    vehicles() {
+      return this.$store.state.vehicles;
+    },
   },
   methods: {
     ...mapActions([
       'getMakes',
-      'getModels'
+      'getModels',
+      'getVehicles'
     ]),
     editMake(id) {
       this.makeToEdit = { ...this.makes.find(make => make.id === id)};
@@ -104,6 +114,7 @@ export default {
   created() {
     this.getMakes();
     this.getModels();
+    this.getVehicles();
   }
 
 }

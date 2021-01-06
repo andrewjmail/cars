@@ -13,5 +13,12 @@ export default {
         .catch(e => {
             return e.message;
         })
-    }
+    },
+    create: async(data) => {
+        return axios.post(`http://car-api.test/api/v1/vehicles`, data, {
+            headers: {
+                Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui'
+            }
+        })
+    },
 }

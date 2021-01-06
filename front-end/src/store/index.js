@@ -16,9 +16,6 @@ export default new Vuex.Store({
       notification: null
     },
     mutations: {
-      SET_VEHICLES(state, vehicles) {
-        state.vehicles = vehicles;
-      },
       SET_ERROR(state, error)  {
         state.error = error;
         setTimeout(() => state.error = null, 2500);
@@ -50,6 +47,12 @@ export default new Vuex.Store({
       },
       DELETE_MODEL(state, model) {
         state.models = state.models.filter(stateModel => stateModel.id !== model.id);
+      },
+      SET_VEHICLES(state, vehicles) {
+        state.vehicles = vehicles;
+      },
+      CREATE_VEHICLE(state, vehicle) {
+        state.vehicles.push(vehicle);
       },
       SET_NOTIFICATION(state, notification) {
           state.notification = notification;
@@ -124,6 +127,13 @@ export default new Vuex.Store({
       deleteModel(context, model) {
         return modelService.delete(model).then(response => {
           context.commit('DELETE_MODEL', response.data);
+        }).catch(error => {
+          context.commit('SET_ERROR', error.toString());
+        });
+      },
+      createVehicle(context, data) {
+        vehicleService.create(data).then(response => {
+          context.commit('CREATE_VEHICLE', response.data);
         }).catch(error => {
           context.commit('SET_ERROR', error.toString());
         });
