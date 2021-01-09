@@ -1,10 +1,25 @@
 <template>
   <div>
-    <make-admin :makes="makes"></make-admin>
-    <model-admin :models="models"></model-admin>
-    <vehicle-admin :vehicles="vehicles"
-                   :makes="makes"
-                   :models="models">
+    <div class="mt-5 mb-5 flex justify-center w-full">
+      <ul class="flex justify-between">
+        <li class="mx-4"><a href="" @click.prevent="setTab('makes')" :class="{ 'active': tab === 'makes'}">Makes</a></li>
+        <li class="mx-4"><a href="" @click.prevent="setTab('models')" :class="{ 'active': tab === 'models'}">Models</a></li>
+        <li class="mx-4"><a href="" @click.prevent="setTab('vehicles')" :class="{ 'active': tab === 'vehicles'}">Vehicles</a></li>
+      </ul>
+    </div>
+    <make-admin
+        v-if="tab === 'makes'"
+        :makes="makes">
+    </make-admin>
+    <model-admin
+        v-if="tab === 'models'"
+        :models="models">
+    </model-admin>
+    <vehicle-admin
+        v-if="tab === 'vehicles'"
+        :vehicles="vehicles"
+        :makes="makes"
+        :models="models">
     </vehicle-admin>
   </div>
 </template>
@@ -29,7 +44,8 @@ export default {
       make: null,
       makeToEdit: null,
       makeToDelete: null,
-      showCreateModal: false
+      showCreateModal: false,
+      tab: 'makes'
     }
   },
   computed: {
@@ -66,6 +82,9 @@ export default {
     },
     createMake() {
       this.showCreateModal = true;
+    },
+    setTab(tab) {
+      this.tab = tab;
     }
 
   },
@@ -79,5 +98,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .active {
+    border-bottom: 1px solid;
+    font-weight: 500;
+  }
 </style>
