@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/v1/login', function(){
+    return response()->json('yurppp');
+});
+
 Route::group(['prefix' => '/v1'], function() {
     Route::apiResource('/vehicles', VehicleController::class);
     Route::apiResource('/makes', MakeController::class)->only(['index', 'store', 'update', 'destroy']);

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container sm">
+  <div id="app" class="container sm px-2 h-screen">
     <Notification></Notification>
     <h1 class="text-5xl text-center">Vehicle Search</h1>
     <router-view></router-view>

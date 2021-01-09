@@ -153,8 +153,8 @@ export default new Vuex.Store({
           context.commit('SET_ERROR', error.toString());
         });
       },
-      deleteVehicle(context, vehiclw) {
-        return vehicleService.delete(vehiclw).then(response => {
+      deleteVehicle(context, vehicle) {
+        return vehicleService.delete(vehicle).then(response => {
           context.commit('DELETE_VEHICLE', response.data);
         }).catch(error => {
           context.commit('SET_ERROR', error.toString());
@@ -162,6 +162,6 @@ export default new Vuex.Store({
       },
       setNotification(context, notification) {
           context.commit('SET_NOTIFICATION', notification);
-      }
+      },
     },
   })
