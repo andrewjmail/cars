@@ -22,7 +22,7 @@ const router =  new Router({
     },
     {
       path: '/auth',
-      name: 'Login',
+      name: 'Auth',
       component: Auth
     },
     {
@@ -39,23 +39,13 @@ const router =  new Router({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem('jwt') == null) {
+    if (localStorage.getItem('token') == null) {
       next({
-        path: '/login',
+        path: '/auth',
         params: { nextUrl: to.fullPath }
       })
     } else {
-      let user = JSON.parse(localStorage.getItem('user'))
-      if(to.matched.some(record => record.meta.is_admin)) {
-        if(user.is_admin == 1){
-          next()
-        }
-        else{
-          next({ name: 'login'})
-        }
-      }else {
-        next()
-      }
+      next();
     }
   }
   else {

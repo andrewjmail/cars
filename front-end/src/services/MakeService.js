@@ -1,50 +1,16 @@
-import axios from 'axios';
+import Api from './Api';
 
 export default {
     get: async() => {
-        return axios.get(`http://car-api.test/api/v1/makes`, {
-            headers: {
-                Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui'
-            }
-        })
-        .then(response => {
-            return response;
-        })
-        .catch(e => {
-            return e.message;
-        })
+        return Api.get(`/makes`);
     },
     create: async(make) => {
-        return axios.post(`http://car-api.test/api/v1/makes`, {name: make}, {
-            headers: {
-                Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui'
-            }
-        })
+        return Api.post(`http://car-api.test/api/v1/makes`, {name: make})
     },
     update: async(make) => {
-        return axios.put(`http://car-api.test/api/v1/makes/${make.id}`, {name: make.name}, {
-            headers: {
-                Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui'
-            }
-        })
-        .then(response => {
-            return response;
-        })
-        .catch(e => {
-            return e.message;
-        })
+        return Api.put(`http://car-api.test/api/v1/makes/${make.id}`, {name: make.name});
     },
     delete: async(make) => {
-        return axios.delete(`http://car-api.test/api/v1/makes/${make.id}`, {
-            headers: {
-                Authorization: 'Bearer D8JdIVcoGPuTvWeE9XIM9qAmeOf4eVC8Lo5xy7KmtxqTF715J5SP0FjgAgui'
-            }
-        })
-        .then(response => {
-            return response;
-        })
-        .catch(e => {
-            return e.message;
-        })
+        return Api.delete(`http://car-api.test/api/v1/makes/${make.id}`);
     },
 }

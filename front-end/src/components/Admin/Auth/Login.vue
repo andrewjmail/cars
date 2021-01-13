@@ -4,8 +4,8 @@
     <div class="max-w-xs w-full">
       <h4>Login</h4>
       <div class="mt-2">
-        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-        <input v-model="username" type="text" name="name" id="username" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input v-model="email" type="text" name="email" id="username" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
       </div>
       <div class="mt-2">
         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
@@ -26,16 +26,18 @@ export default {
   name: "Login",
   data() {
     return {
-      username: null,
-      password: null
+      email: 'admin@admin.com',
+      password: 'password'
     }
   },
   methods: {
-    login() {
-      loginService.login(this.password, this.username).then(res => {
-        console.log(res);
+    async login() {
+      await loginService.login({password:this.password, email:this.email, device_name: "browser"})
+        .then(res => {
+          localStorage.setItem('token', res.data);
+          this.$router.push({ name: 'Admin', query: { redirect: '/admin' } });
       });
-    }
+    },
   }
 }
 </script>
